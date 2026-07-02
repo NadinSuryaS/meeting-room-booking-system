@@ -48,3 +48,111 @@ Digitalizes room reservations, eliminates double-booking, automates approvals, a
 ---
 
 ## 🛠️ Tech Stack
+┌─────────────────────────────────────────────────────────────┐
+│                  ServiceNow Now Platform                     │
+├──────────────────┬──────────────────┬───────────────────────┤
+│   UI Layer       │   Logic Layer    │   Data Layer          │
+│                  │                  │                        │
+│  App Engine      │  Client Script   │  Custom Table         │
+│  Studio UI       │  Business Rule   │  (Meeting Room        │
+│  Booking Form    │  Flow Designer   │   Booking)            │
+│                  │  Email Notif.    │  Auto Number          │
+├──────────────────┴──────────────────┴───────────────────────┤
+│   Reporting Layer: Dashboard · Reports · Charts             │
+└─────────────────────────────────────────────────────────────┘
+
+| Component | Technology |
+|---|---|
+| **Platform** | ServiceNow App Engine Studio |
+| **UI** | Now Platform UI Builder (HTML, CSS, JS) |
+| **Client Validation** | Client Script (JavaScript) |
+| **Server Automation** | Business Rule (Server-side JavaScript) |
+| **Workflow** | Flow Designer (ServiceNow Native) |
+| **Database** | ServiceNow Custom Table |
+| **Notifications** | ServiceNow Email Notification (SMTP) |
+| **Reporting** | ServiceNow Reports & Dashboard |
+| **Hosting** | ServiceNow Cloud (Multi-Instance) |
+
+---
+
+## 🔄 Workflow
+Employee fills Booking Form
+│
+▼
+Client Script validates End Time > Start Time
+│
+▼
+Business Rule sets Status = Pending
+│
+▼
+Flow Designer executes workflow
+│
+▼
+Email Notification sent to Employee ──────────────────┐
+│                                             │
+▼                                             │
+Booking stored in Meeting Room Booking Table     ✉️ Confirmation
+│                                        sent instantly
+▼
+Administrator reviews Booking
+│
+▼
+Administrator changes Status → Approved
+│
+▼
+Meeting conducted in confirmed room
+│
+▼
+Administrator marks Status → Completed
+│
+▼
+Dashboard & Reports updated automatically ✅
+
+---
+
+## 📋 Booking Form Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `Number` | Auto Number | Unique Booking ID (MRB prefix) |
+| `Employee Name` | String | Full name of the employee |
+| `Employee ID` | String | Employee identifier |
+| `Employee Email` | Email | For notification delivery |
+| `Room Name` | Choice | Conference Room A / B, Training Room, Interview Room |
+| `Booking Date` | Date | Date of the meeting |
+| `Start Time` | Date/Time | Meeting start time |
+| `End Time` | Date/Time | Meeting end time |
+| `Purpose` | String | Reason for the meeting |
+| `Status` | Choice | Pending / Approved / Completed |
+
+---
+
+## 📊 Project Modules
+Phase 1 → Application Setup       ✅ App created, roles configured
+Phase 2 → Database Design          ✅ Custom table, auto-numbering, fields
+Phase 3 → Form Design              ✅ Booking form, mandatory fields, choices
+Phase 4 → Business Logic           ✅ Client Script + Business Rule
+Phase 5 → Workflow Automation      ✅ Flow Designer + Email Notification
+Phase 6 → Reporting & Analytics    ✅ Dashboard + 4 Reports
+Phase 7 → Testing & Validation     ✅ All 12 test cases passed
+
+---
+
+## 🧪 Testing
+
+| Test Case | Module | Result |
+|---|---|---|
+| TC-01 | Submit valid booking form | ✅ Pass |
+| TC-02 | Submit with missing mandatory field | ✅ Pass |
+| TC-03 | End Time earlier than Start Time | ✅ Pass |
+| TC-04 | End Time equal to Start Time | ✅ Pass |
+| TC-05 | Business Rule — auto Pending status | ✅ Pass |
+| TC-06 | Flow Designer execution on insert | ✅ Pass |
+| TC-07 | Email Notification sent to employee | ✅ Pass |
+| TC-08 | Auto Number generation (MRB format) | ✅ Pass |
+| TC-09 | Admin approval — status to Approved | ✅ Pass |
+| TC-10 | Admin marks booking Completed | ✅ Pass |
+| TC-11 | Dashboard renders all charts | ✅ Pass |
+| TC-12 | Booking Status Report generated | ✅ Pass |
+
+**All 12 / 12 test cases passed ✅**
